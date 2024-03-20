@@ -13,7 +13,7 @@ app.use(express.static("public"));
 
 
 app.get("/", (req, res) => {
-    res.render("index.ejs");
+    res.render("index.ejs", {blogs : blogs} );
 });
 
 
@@ -25,10 +25,10 @@ app.post("/submit", (req, res) => {
         edit : false
         };
     blogs.push(post);
-    res.render("index.ejs", {blogs : blogs})
+    res.redirect("/")
 
     console.log(blogs)
-
+    
 });
 
 
@@ -37,7 +37,7 @@ app.post("/delete", (req,res) => {
     const id = parseInt(req.body.id);
     const index = (blogs.findIndex(blog => blog.id === id));
     blogs.splice(index,1);
-    res.render("index.ejs", {blogs: blogs})
+    res.redirect("/")
 });
 
 
@@ -63,7 +63,7 @@ app.post("/submit/edit", (req, res) => {
     blogs[index].content = editContent; 
     blogs[index].edit = false;
 
-    res.render("index.ejs", {blogs : blogs});
+    res.redirect("/");
 })
 
 
