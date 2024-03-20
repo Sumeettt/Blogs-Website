@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/main.css">
+    <title>Blog Web App</title>
+</head>
+<body>
+    <div class="main">
+    <h1>blogs.com</h1>
+    <form action="/submit"  method="post" class="input">
+        <label for="topic">Topic:</label>
+        <input type="text" name="topic" id="topic" required/>
+        <label for="content">What is on your mind?</label>
+        <input type="text" name="content" id="content" >
+        <input type="submit">
+    </form>
+    <section>
+    <% if(locals.blogs && locals.blogs.length > 0) { %>
+        <% console.log(blogs) %>
+        <% for(let i=0; i<blogs.length; i++) { %>
+
+        <h3> <%= blogs[i]["topic"] %></h1>
+        <p> <%= blogs[i]["content"] %></p>
+        <div class="edit-delete-buttons">
+        <form action="/delete" method="post">
+            <input type="hidden" name="id" value= <%= blogs[i]["id"] %> />
+            <button type="submit">Delete</button>
+        </form>
+        <form action="/edit" method="post">
+            <input type ="hidden" name="id" value = <%= blogs[i]["id"] %> />
+            <button type="submit">Edit</button>
+        </form>
+     </div>
+       <% if(locals.blogs[i]["edit"] === true) { %>
+        <form action="/submit/edit" method="post" class="edit-form">
+            <input type="hidden" name="editId" value="<%= blogs[i]["id"] %>"/>
+            <label for="editTopic">Edit Topic:</label>
+            <input type="text" name="editTopic" value="<%= blogs[i].topic %>">
+            <label for="editContent">Edit Content:</label>
+            <input type="text" name="editContent" value="<%= blogs[i].content %>">
+            <button type="submit">Save Changes</button>
+        </form>        
+                <% } %>
+            <%} } else { %>
+                <h3>No blogs yet</h1>
+                <% } %> 
+            </div>      
+        </section>
+</body>
+</html>
